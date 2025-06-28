@@ -1,11 +1,11 @@
 from Crypto.Protocol.KDF import PBKDF2
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
-from Crypto.Hash import SHA256  # 👈 Aquí el cambio
+from Crypto.Hash import SHA256  
 
 password = b"clave_super_segura"
 salt = get_random_bytes(16)
-key = PBKDF2(password, salt, dkLen=32, count=1000000, hmac_hash_module=SHA256)  # 👈 Aquí también
+key = PBKDF2(password, salt, dkLen=32, count=1000000, hmac_hash_module=SHA256)  
 
 cipher = AES.new(key, AES.MODE_GCM)
 ciphertext, tag = cipher.encrypt_and_digest(b"Mensaje protegido")
