@@ -4,16 +4,16 @@ from Crypto.PublicKey import RSA
 
 # Alice
 session_key = get_random_bytes(16)
-rsa_pub = RSA.import_key(open("publica.pem").read())
+rsa_pub = RSA.import_key(open("asimetrico/publica.pem").read())
 cipher_rsa = PKCS1_OAEP.new(rsa_pub)
 enc_session_key = cipher_rsa.encrypt(session_key)
 
 aes = AES.new(session_key, AES.MODE_EAX)
 nonce = aes.nonce
-ciphertext, tag = aes.encrypt_and_digest(b"Mensaje secreto")
+ciphertext, tag = aes.encrypt_and_digest(b"hola bob")
 
 # Bob
-rsa_priv = RSA.import_key(open("privada.pem").read(), passphrase="clave123")
+rsa_priv = RSA.import_key(open("asimetrico/privada.pem").read(), passphrase="clave123")
 dec_rsa = PKCS1_OAEP.new(rsa_priv)
 session_key = dec_rsa.decrypt(enc_session_key)
 
